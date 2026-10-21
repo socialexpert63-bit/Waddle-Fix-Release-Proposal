@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Waddle Fix Release – Proposal by Sajjad Ali</title>
+<style>
+:root{--bg:#f4f9fd;--card:#fff;--ink:#12263f;--mute:#566b82;--line:#d6e4f0;--brand:#1d6fb8;--accent:#f08a24;--soft:#e4f1fb;--ok:#1b8a5a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a2b;--card:#142338;--ink:#e8f1fa;--mute:#9db3c9;--line:#243a55;--brand:#6bb4f0;--accent:#ffa94d;--soft:#182c45;--ok:#4cc38a}}
+:root[data-theme="dark"]{--bg:#0d1a2b;--card:#142338;--ink:#e8f1fa;--mute:#9db3c9;--line:#243a55;--brand:#6bb4f0;--accent:#ffa94d;--soft:#182c45;--ok:#4cc38a}
+html{scroll-padding-top:calc(60px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:30}
+.w{max-width:980px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+nav .w{display:flex;align-items:center;gap:6px;height:52px;overflow-x:auto;white-space:nowrap}
+nav a{color:var(--mute);text-decoration:none;font-size:14px;font-weight:600;padding:6px 10px;border-radius:8px}
+nav a:hover{background:var(--soft);color:var(--ink)}
+nav b{margin-right:8px}
+#th{margin-left:auto;background:var(--soft);border:0;border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--ink)}
+#bar{height:3px;background:var(--accent);width:0}
+header{padding:60px 0 36px;text-align:center}
+.tag{display:inline-block;background:var(--soft);color:var(--brand);padding:4px 14px;border-radius:99px;font-size:14px;font-weight:600}
+h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.15;margin:16px 0 12px}
+h1 span,.ac{color:var(--accent)}
+.lead{color:var(--mute);max-width:660px;margin:0 auto 24px;font-size:1.1rem}
+.btn{display:inline-block;background:var(--accent);color:#1a1000;padding:12px 24px;border-radius:10px;font-weight:700;text-decoration:none;margin:4px}
+.btn.o{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:36px}
+.stats div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.stats b{display:block;font-size:1.7rem;color:var(--brand)}
+.stats span{color:var(--mute);font-size:.9rem}
+section{padding:32px 0}
+h2{font-size:1.6rem;margin:0 0 6px}
+.sub{color:var(--mute);margin:0 0 20px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.c h3{margin:0 0 6px;font-size:1.05rem}
+.c p,.c li{color:var(--mute);font-size:.95rem}
+.c p{margin:0}
+.c ul{margin:6px 0 0;padding-left:18px}
+.in h3{color:var(--ok)}.out h3{color:var(--accent)}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px}
+summary{cursor:pointer;padding:16px 18px;font-weight:700;list-style:none;display:flex;gap:12px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary i{font-style:normal;background:var(--brand);color:var(--bg);width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none}
+summary em{margin-left:auto;font-style:normal;color:var(--mute);font-size:.85rem;font-weight:500}
+.dp{padding:0 18px 16px;color:var(--mute);font-size:.95rem}
+.dp p{margin:8px 0}
+.dp .done{border-left:4px solid var(--ok);background:var(--soft);padding:10px 14px;border-radius:8px;color:var(--ink)}
+.dp b{color:var(--ink)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;background:var(--card);border:1px solid var(--line)}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:.92rem;vertical-align:top}
+th{background:var(--soft)}
+.g{display:grid;grid-template-columns:130px repeat(10,minmax(34px,1fr));gap:4px;min-width:560px;align-items:center;font-size:.8rem}
+.g .h{text-align:center;color:var(--mute)}
+.g .l{font-weight:600}
+.g .b{background:var(--brand);height:22px;border-radius:6px;opacity:.9}
+.g .b.t{background:var(--accent)}
+.g .b.r{background:var(--ok)}
+.steps{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));counter-reset:s}
+.steps div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:.92rem;color:var(--mute)}
+.steps div:before{counter-increment:s;content:counter(s);display:block;color:var(--accent);font-weight:800;font-size:1.3rem}
+.steps b{color:var(--ink);display:block}
+pre{background:var(--soft);padding:14px;border-radius:10px;overflow-x:auto;font-size:.85rem;margin:0;color:var(--ink)}
+.note{background:var(--soft);border-radius:14px;padding:20px;border-left:5px solid var(--accent)}
+.note p{margin:0}
+svg{max-width:100%;height:auto}
+footer{padding:40px 0;text-align:center;color:var(--mute);font-size:.9rem}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes wob{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes dn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(240,138,36,.5)}50%{box-shadow:0 0 0 10px rgba(240,138,36,0)}}
+@keyframes drift{from{transform:translateY(-20px);opacity:0}20%{opacity:.7}to{transform:translateY(420px) translateX(30px);opacity:0}}
+header{position:relative;overflow:hidden}
+header>*{animation:up .7s both}
+header>.tag{animation-delay:.05s}header>h1{animation-delay:.15s}header>.lead{animation-delay:.3s}header>.btn{animation-delay:.45s}
+.stats div{animation:up .6s both}
+.stats div:nth-child(1){animation-delay:.6s}.stats div:nth-child(2){animation-delay:.7s}.stats div:nth-child(3){animation-delay:.8s}.stats div:nth-child(4){animation-delay:.9s}.stats div:nth-child(5){animation-delay:1s}
+.flake{position:absolute;top:0;color:var(--brand);opacity:0;pointer-events:none;animation:drift linear infinite;z-index:0}
+header>*{z-index:1}
+nav b span{display:inline-block;animation:wob 1.6s ease-in-out infinite;transform-origin:50% 90%}
+h1 span{display:inline-block;animation:bob 3s ease-in-out infinite}
+.btn{transition:transform .2s,box-shadow .2s}
+.btn:not(.o){animation:glow 2.4s infinite}
+.btn:hover{transform:translateY(-3px)}
+.c,.steps div,.stats div,details{transition:transform .25s,box-shadow .25s,border-color .25s}
+.c:hover,.steps div:hover,.stats div:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(29,111,184,.15);border-color:var(--brand)}
+details:hover{border-color:var(--brand)}
+details[open] .dp{animation:dn .35s ease both}
+summary i{transition:transform .3s}
+details[open] summary i{transform:rotate(360deg) scale(1.1);background:var(--accent)}
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.js .rv.vis{opacity:1;transform:none}
+.g .b{transform-origin:left;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.g.on .b{transform:scaleX(1)}
+.g.on .b:nth-of-type(2){transition-delay:.2s}.g.on .b:nth-of-type(3){transition-delay:.4s}.g.on .b:nth-of-type(4){transition-delay:.6s}.g.on .b:nth-of-type(5){transition-delay:.8s}.g.on .b:nth-of-type(6){transition-delay:1s}
+svg g[stroke] path{stroke-dasharray:6 6;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-12}}
+.lk{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.lk a{display:inline-block;padding:7px 14px;border-radius:99px;background:var(--soft);color:var(--brand);font-size:.88rem;font-weight:700;text-decoration:none;border:1px solid var(--line);transition:background .2s,color .2s,transform .2s}
+.lk a:hover{background:var(--brand);color:var(--bg);transform:translateY(-2px)}
+.pt{font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+@keyframes bg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+@keyframes blob{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,30px) scale(1.2)}}
+@keyframes shine{from{background-position:-200% 0}to{background-position:200% 0}}
+@keyframes burst{from{opacity:1;transform:translate(0,0) scale(.5)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.4) rotate(var(--rt))}}
+header{background:linear-gradient(120deg,var(--soft),var(--bg),var(--soft),var(--bg));background-size:300% 300%;animation:bg 14s ease infinite;border-radius:0 0 32px 32px}
+header::before,header::after{content:"";position:absolute;border-radius:50%;filter:blur(40px);opacity:.35;pointer-events:none;animation:blob 9s ease-in-out infinite}
+header::before{width:220px;height:220px;background:var(--brand);left:-60px;top:20px}
+header::after{width:180px;height:180px;background:var(--accent);right:-40px;bottom:10px;animation-delay:-4s}
+.tag{background:linear-gradient(110deg,var(--soft) 40%,var(--card) 50%,var(--soft) 60%);background-size:200% 100%;animation:shine 3.5s linear infinite}
+h2{position:relative;display:inline-block}
+h2::after{content:"";display:block;height:4px;width:0;margin-top:4px;background:var(--accent);border-radius:4px;transition:width .9s .3s ease}
+h2.vis::after{width:60%}
+.c{position:relative;will-change:transform}
+.c::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(240,138,36,.18),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.c:hover::after{opacity:1}
+nav a.act{background:var(--accent);color:#1a1000}
+.tl,.lk a,.steps div{position:relative}
+.cf{position:fixed;pointer-events:none;z-index:50;font-size:22px;animation:burst 1s ease-out forwards}
+#top{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:0;background:var(--accent);color:#1a1000;font-size:20px;font-weight:800;cursor:pointer;opacity:0;transform:translateY(20px) scale(.8);transition:opacity .3s,transform .3s;z-index:25}
+#top.s{opacity:1;transform:none}
+#top:hover{animation:bob 1s infinite}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none}.g .b{transform:none}.flake{display:none}}
+</style>
+</head>
+<body>
+<nav><div class="w"><b><span>🐧</span> Waddle</b><a href="#scope">Scope</a><a href="#milestones">Milestones</a><a href="#timeline">Timeline</a><a href="#process">Process</a><a href="#portfolio">Portfolio</a><a href="#risks">Risks</a><a href="#trial">Trial</a><a href="#faq">FAQ</a><button id="th" aria-label="Toggle theme">◐</button></div><div id="bar"></div></nav>
+
+<header class="w">
+<span class="tag">Proposal for Mariana Beresford · Waddle App Ltd</span>
+<h1>Penguin — a safe, focused fix release for <span>Waddle</span></h1>
+<p class="lead">Five defined fixes to a live app, delivered as small pull requests, proven on real iPhone and Android devices, and released to both stores by about 13 November.</p>
+<a class="btn" href="#trial">Start with the paid trial</a><a class="btn o" href="#milestones">View milestones</a>
+<div class="stats"><div><b>5</b><span>defined fixes</span></div><div><b>6</b><span>milestones with tests</span></div><div><b>2 Nov</b><span>start date</span></div><div><b>~13 Nov</b><span>store release</span></div><div><b>12+ yrs</b><span>Flutter and full-stack</span></div></div>
+</header>
+
+<main class="w">
+<section id="scope">
+<h2>Scope</h2>
+<p class="sub">Your code review has found the causes. My job is to fix them with the smallest safe change.</p>
+<div class="grid">
+<div class="c in"><h3>In scope</h3><ul><li>Token refresh and refresh-token renewal fix</li><li>Firebase Analytics: screen views and key events</li><li>Admin editing of all events and parent-added places</li><li>New website field for places</li><li>Admin users CSV export</li><li>Environment variables and tighter route access</li><li>Real-device testing and one combined store release</li></ul></div>
+<div class="c out"><h3>Out of scope</h3><ul><li>Screen rewrites or redesigns</li><li>New features beyond the list</li><li>Push notification and display bug fixes (second batch)</li><li>Stripe Connect (later, if agreed)</li></ul></div>
+<div class="c"><h3>Stack I will work in</h3><ul><li>Flutter, Dart, GetX, Dio</li><li>NestJS, Prisma, PostgreSQL</li><li>Next.js admin site</li><li>AWS EC2 and S3, Firebase</li></ul></div>
+</div>
+</section>
+
+<section>
+<h2>How the pieces connect</h2>
+<p class="sub">Where each fix lands in your system.</p>
+<svg viewBox="0 0 760 210" role="img" aria-label="System diagram" font-family="system-ui,sans-serif" font-size="13">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0L8,4L0,8z" fill="#8aa"/></marker></defs>
+<g stroke="#8aa" stroke-width="1.5" fill="none" marker-end="url(#a)"><path d="M150 60H250"/><path d="M150 150H250"/><path d="M430 60H520"/><path d="M430 150H520"/><path d="M340 85V125"/></g>
+<g fill="#1d6fb8"><rect x="20" y="35" width="130" height="50" rx="10"/><rect x="20" y="125" width="130" height="50" rx="10" fill="#f08a24"/><rect x="250" y="35" width="180" height="50" rx="10"/><rect x="250" y="125" width="180" height="50" rx="10" fill="#f08a24"/><rect x="520" y="35" width="200" height="50" rx="10"/><rect x="520" y="125" width="200" height="50" rx="10"/></g>
+<g fill="#fff" text-anchor="middle"><text x="85" y="65">Flutter app</text><text x="85" y="155">Admin (Next.js)</text><text x="340" y="65">NestJS API · auth</text><text x="340" y="155">Admin routes + CSV</text><text x="620" y="65">PostgreSQL (Prisma)</text><text x="620" y="155">S3 · Firebase · EC2</text></g>
+</svg>
+<p class="sub" style="margin-top:8px">Orange blocks are where most of the change happens: the app’s auth and analytics, plus admin screens, server routes and configuration.</p>
+</section>
+
+<section id="milestones">
+<h2>Milestones and “done when” tests</h2>
+<p class="sub">Tap a milestone to expand it. The tests are proposals for you to adjust before work starts.</p>
+<details open><summary><i>1</i>Stop users being logged out<em>Trial task</em></summary><div class="dp">
+<p><b>Work:</b> trace the refresh flow in Dio interceptors and the NestJS refresh endpoint, then fix the cause named in your review. Handle simultaneous requests failing at once, refresh-token renewal and clean sign-out when a session really has expired.</p>
+<p class="done"><b>Done when:</b> a test account stays signed in across access-token expiry and across app restarts days apart, on a real iPhone and Android phone. An expired refresh token leads to a clean login, with no loop and no surprise logout.</p></div></details>
+<details><summary><i>2</i>Firebase Analytics<em>App</em></summary><div class="dp">
+<p><b>Work:</b> add Firebase Analytics with automatic screen views (via a GetX route observer) and a short list of key events with consistent snake_case names, agreed with you first.</p>
+<p class="done"><b>Done when:</b> every agreed screen and event appears in Firebase DebugView from both the iOS and Android builds.</p></div></details>
+<details><summary><i>3</i>Admin: edit events and places, add website field<em>API · DB · Admin</em></summary><div class="dp">
+<p><b>Work:</b> editing for all events and parent-added places, a new nullable <code>website</code> column via a Prisma migration, URL validation, and the field shown in the app where places appear.</p>
+<p class="done"><b>Done when:</b> an admin edits an event and a place, saves a website, and the change shows in the live app. The migration runs safely on a copy of production data.</p></div></details>
+<details><summary><i>4</i>Admin: export users to CSV<em>API · Admin</em></summary><div class="dp">
+<p><b>Work:</b> an admin-only endpoint and a download button, with properly escaped fields and streaming for larger lists.</p>
+<p class="done"><b>Done when:</b> the file opens correctly in Excel and Google Sheets, and its row count matches the database. Non-admins are refused.</p></div></details>
+<details><summary><i>5</i>Configuration clean-up and route access<em>API · Ops</em></summary><div class="dp">
+<p><b>Work:</b> move keys and settings to environment variables, add <code>.env.example</code>, and add guards to the server routes you name. Any secret already committed should be rotated.</p>
+<p class="done"><b>Done when:</b> no secrets remain in the repo, the app runs from environment variables on EC2, and unauthorised calls to the listed routes return 401 or 403.</p></div></details>
+<details><summary><i>6</i>Device QA and store release<em>Release</em></summary><div class="dp">
+<p><b>Work:</b> a regression pass on real devices with your test accounts, then production builds for both stores with a short release note.</p>
+<p class="done"><b>Done when:</b> the agreed checklist passes and both builds are submitted together for store review.</p></div></details>
+<p class="sub">Fixed price per milestone, quoted after I see the detailed brief and paid when you accept each “done when” test.</p>
+</section>
+
+<section id="timeline">
+<h2>Timeline</h2>
+<p class="sub">Working days, 2–13 November. Orange is the paid trial, green is release.</p>
+<div class="tw"><div class="g">
+<span></span><span class="h">2</span><span class="h">3</span><span class="h">4</span><span class="h">5</span><span class="h">6</span><span class="h">9</span><span class="h">10</span><span class="h">11</span><span class="h">12</span><span class="h">13</span>
+<span class="l">1 Auth (trial)</span><i class="b t" style="grid-column:2/6"></i>
+<span class="l">2 Analytics</span><i class="b" style="grid-column:6/8"></i>
+<span class="l">3 Admin edits</span><i class="b" style="grid-column:6/9"></i>
+<span class="l">4 CSV export</span><i class="b" style="grid-column:8/10"></i>
+<span class="l">5 Config</span><i class="b" style="grid-column:8/10"></i>
+<span class="l">6 QA + release</span><i class="b r" style="grid-column:9/12"></i>
+</div></div>
+<p class="sub" style="margin-top:10px">Store review time is outside my control, so I would submit as early as the checklist allows.</p>
+</section>
+
+<section id="process">
+<h2>How each change reaches you</h2>
+<p class="sub">Built around your way of working.</p>
+<div class="steps">
+<div><b>Agree the test</b>“Done when” written down first</div>
+<div><b>Small PR</b>One focused pull request in your GitHub</div>
+<div><b>Real devices</b>iPhone and Android with your test accounts</div>
+<div><b>Daily update</b>Short written summary every working day</div>
+<div><b>You accept</b>Milestone paid when the test passes</div>
+</div>
+<div class="c" style="margin-top:16px"><h3>Sample end-of-day update</h3>
+<pre>Done: refresh interceptor queues parallel 401s (PR #1)
+Tested: iPhone 14, Pixel 7 – session survives expiry
+Next: refresh-token renewal edge cases
+Blocked: need a test account with an expired token</pre></div>
+<div class="grid" style="margin-top:16px">
+<div class="c"><h3>Communication</h3><p>At least 2 hours of overlap with UK working hours, with the exact window set on our first call.</p></div>
+<div class="c"><h3>Confidentiality</h3><p>NDA signed before I see any code or the detailed brief. I am also happy to sign a non-compete.</p></div>
+</div>
+</section>
+
+<section id="portfolio">
+<h2>Portfolio: apps live in the stores</h2>
+<p class="sub">Published Flutter and mobile apps I have worked on. Tap a store link to see them live.</p>
+<div class="grid">
+<div class="c"><div class="pt">Built for a client</div><h3>Family Activity Finder</h3><p>Find great family days out near you, with local ideas for every age and every weather.</p><div class="lk"><a href="https://play.google.com/store/apps/details?id=com.ceekayapps.familyactivityfinder&hl=en" target="_blank" rel="noopener">Google Play</a><a href="https://apps.apple.com/gb/app/family-activity-finder/id6762408540" target="_blank" rel="noopener">App Store</a></div></div>
+<div class="c"><h3>Challe Activity</h3><p>Published on both stores.</p><div class="lk"><a href="https://play.google.com/store/apps/details?id=com.cas.challe&hl=en_US" target="_blank" rel="noopener">Google Play</a><a href="https://apps.apple.com/us/app/challe-activity/id6504609067" target="_blank" rel="noopener">App Store</a></div></div>
+<div class="c"><h3>Reminder App</h3><p>Published on both stores.</p><div class="lk"><a href="https://play.google.com/store/apps/details?id=com.link.reminder&hl=en" target="_blank" rel="noopener">Google Play</a><a href="https://apps.apple.com/us/app/reminderlink/id6479702306" target="_blank" rel="noopener">App Store</a></div></div>
+<div class="c"><h3>Sand Caddie – Beach Rental</h3><p>Published on both stores.</p><div class="lk"><a href="https://play.google.com/store/apps/details?id=com.sandcaddie&hl=en_US" target="_blank" rel="noopener">Google Play</a><a href="https://apps.apple.com/pk/app/sand-caddie-beach-rental/id6502660470" target="_blank" rel="noopener">App Store</a></div></div>
+<div class="c"><h3>Distrosub</h3><p>Published on both stores.</p><div class="lk"><a href="https://play.google.com/store/apps/details?id=com.distrosub.www.twa&hl=en_US" target="_blank" rel="noopener">Google Play</a><a href="https://apps.apple.com/pk/app/distrosub/id6751633808" target="_blank" rel="noopener">App Store</a></div></div>
+<div class="c"><h3>Comet – What to do right now</h3><p>Available on the App Store.</p><div class="lk"><a href="https://apps.apple.com/pk/app/comet-what-to-do-right-now/id6505089727" target="_blank" rel="noopener">App Store</a></div></div>
+</div>
+</section>
+
+<section id="risks">
+<h2>Risks and how I handle them</h2>
+<div class="tw"><table>
+<tr><th>Risk</th><th>Mitigation</th></tr>
+<tr><td>Store review delays the release</td><td>Submit early, keep builds ready and tell you the moment anything is rejected.</td></tr>
+<tr><td>A fix touches shared code</td><td>Small PRs, no unrelated refactors and a regression pass on login, browse and recommendations.</td></tr>
+<tr><td>Database migration on live data</td><td>Nullable column, tested on a copy first, with a rollback step written down.</td></tr>
+<tr><td>Secrets already in git history</td><td>Rotate them as part of milestone 5 rather than only hiding them.</td></tr>
+<tr><td>Hard-to-reproduce logouts</td><td>Test with short-lived tokens on a staging setup so expiry can be forced quickly.</td></tr>
+<tr><td>Review finds a fix is bigger than expected</td><td>I flag it before starting and we agree the change in price or scope in writing.</td></tr>
+</table></div>
+</section>
+
+<section id="trial">
+<h2>Paid trial: the authentication fix</h2>
+<p class="sub">Milestone 1 doubles as the trial, so you can judge my code, testing and communication on the most important problem first.</p>
+<div class="grid">
+<div class="c"><h3>What you get</h3><ul><li>One focused PR for the app and API</li><li>A test log from real devices</li><li>Daily written updates</li></ul></div>
+<div class="c"><h3>Then you decide</h3><p>If you are happy, we move to the main contract and the remaining milestones. If not, you pay only for the trial.</p></div>
+</div>
+</section>
+
+<section>
+<div class="note"><h2>Conflict of interest</h2>
+<p>I built Family Activity Finder for a client, and it was published under their company, CeeKay Apps. That project has finished and I own no part of it. I am not working on any family-activity app and will not take one on while working with you.</p></div>
+</section>
+
+<section id="faq">
+<h2>Questions you may have</h2>
+<details><summary>Will you rewrite any screens?</summary><div class="dp">No. Each fix is the smallest change that solves the problem, as a reviewable pull request.</div></details>
+<details><summary>What do I need to provide?</summary><div class="dp">GitHub access after the NDA, the detailed brief, test accounts, Firebase and store access, and a staging environment if you have one.</div></details>
+<details><summary>What happens after the release?</summary><div class="dp">I will watch for regressions and fix anything from this work. I would also be glad to take on the second batch (push notifications, display bugs) and later Stripe Connect work.</div></details>
+<details><summary>About you</summary><div class="dp">Sajjad Ali: full-stack and mobile engineer, 12+ years across Flutter, Dart, Node.js, TypeScript, REST APIs, Firebase and PostgreSQL, with iOS and Android publishing experience.</div></details>
+</section>
+</main>
+
+<footer class="w">Prepared by Sajjad Ali for Mariana Beresford, Waddle App Ltd · October 2026</footer>
+<script>
+var r=document.documentElement,b=document.getElementById("bar");
+r.classList.add("js");
+(function(){var h=document.querySelector("header");for(var i=0;i<14;i++){var f=document.createElement("span");f.className="flake";f.textContent="❄";f.style.left=(Math.random()*100)+"%";f.style.fontSize=(10+Math.random()*12)+"px";f.style.animationDuration=(7+Math.random()*7)+"s";f.style.animationDelay=(-Math.random()*10)+"s";h.appendChild(f)}
+var els=document.querySelectorAll("main section .c,main section .steps div,main section details,main section h2,main section .sub,.tw,.note,svg");
+els.forEach(function(e,i){e.classList.add("rv");e.style.transitionDelay=((i%4)*80)+"ms"});
+if(!("IntersectionObserver" in window)){els.forEach(function(e){e.classList.add("vis")});document.querySelectorAll(".g").forEach(function(g){g.classList.add("on")});return}
+var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add("vis");if(x.target.querySelector(".g"))x.target.querySelector(".g").classList.add("on");io.unobserve(x.target)}})},{threshold:.12});
+els.forEach(function(e){io.observe(e)})})();
+document.getElementById("th").onclick=function(){var d=r.getAttribute("data-theme")==="dark"||(!r.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme:dark)").matches);r.setAttribute("data-theme",d?"light":"dark")};
+addEventListener("scroll",function(){var h=r.scrollHeight-innerHeight;b.style.width=(h>0?scrollY/h*100:0)+"%"});
+(function(){
+var rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+var t=document.createElement("button");t.id="top";t.textContent="↑";t.setAttribute("aria-label","Back to top");t.onclick=function(){scrollTo({top:0,behavior:"smooth"})};document.body.appendChild(t);
+addEventListener("scroll",function(){t.classList.toggle("s",scrollY>600)});
+var links=document.querySelectorAll("nav a[href^='#']"),secs=document.querySelectorAll("main section[id]");
+if("IntersectionObserver" in window){var so=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){links.forEach(function(a){a.classList.toggle("act",a.getAttribute("href")==="#"+x.target.id)})}})},{rootMargin:"-40% 0px -55% 0px"});secs.forEach(function(s){so.observe(s)})}
+if(rm)return;
+setTimeout(function(){document.querySelectorAll(".stats b").forEach(function(b){var m=b.textContent.match(/\d+/);if(!m)return;var end=+m[0],txt=b.textContent,s=performance.now();(function f(n){var p=Math.min((n-s)/1400,1),v=Math.round(end*(1-Math.pow(1-p,3)));b.textContent=txt.replace(/\d+/,v);if(p<1)requestAnimationFrame(f)})(s)})},700);
+if(matchMedia("(pointer:fine)").matches){document.querySelectorAll("main .c").forEach(function(c){
+c.addEventListener("mouseenter",function(){c.style.transitionDelay="0ms"});
+c.addEventListener("mousemove",function(e){var r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;c.style.setProperty("--mx",x+"px");c.style.setProperty("--my",y+"px");c.style.transform="perspective(700px) rotateX("+((y/r.height-.5)*-8)+"deg) rotateY("+((x/r.width-.5)*8)+"deg) translateY(-4px)"});
+c.addEventListener("mouseleave",function(){c.style.transform=""})})}
+document.querySelectorAll(".btn").forEach(function(b){b.addEventListener("click",function(e){var em=["🐧","❄","✨","🎉"];for(var i=0;i<14;i++){var s=document.createElement("span");s.className="cf";s.textContent=em[i%4];s.style.left=e.clientX+"px";s.style.top=e.clientY+"px";var a=Math.random()*6.28,d=60+Math.random()*90;s.style.setProperty("--dx",Math.cos(a)*d+"px");s.style.setProperty("--dy",Math.sin(a)*d+"px");s.style.setProperty("--rt",(Math.random()*360-180)+"deg");document.body.appendChild(s);setTimeout(function(x){x.remove()},1000,s)}})});
+})();
+</script>
+</body>
+</html>
